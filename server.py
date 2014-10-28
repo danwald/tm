@@ -1,13 +1,28 @@
+import cPickle as pickle
+
 from bottle import Bottle, run, get
 
-from conf.settings import PORT
+from conf.settings import PORT, USER_PICKLE, MOVIE_PICKLE
 
+users = pickle.load(open(USER_PICKLE, 'rb'))
+movies = pickle.load(open(MOVIE_PICKLE, 'rb'))
 '''Simple RestAPI described http://docs.mrec.apiary.io/'''
 app = Bottle()
+
 
 @app.get('/ping')
 def ping():
     return "pong"
+
+@app.get('/<type:re:movie|user>/<id:int>')
+def recommendation(type, id):
+    try:
+        if type == 'movie':
+            return {'id':id, 'data': movies[id]}
+        else:
+            return {'id':id, 'data': users[id]}
+    except KeyError:
+        return "404 Not Found"
 
 @app.get('/recommendation/<type:re:movie|user>/<id:int>')
 def recommendation(type, id):

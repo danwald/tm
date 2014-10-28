@@ -6,9 +6,8 @@ MODEL_PATH=os.path.join(ROOT_PATH, "models")
 MOVIE_SOURCE=os.path.join(DATA_PATH, "movies.dat")
 MOVIE_PICKLE=os.path.join(DATA_PATH, "movies.pickle")
 TAGS_SOURCE=os.path.join(DATA_PATH, "tags.dat")
-TAGS_PICKLE=os.path.join(DATA_PATH, "tags.pickle")
 RATINGS_SOURCE=os.path.join(DATA_PATH, "ratings.dat")
-RATINGS_PICKLE=os.path.join(DATA_PATH, "ratings.pickle")
+USER_PICKLE=os.path.join(DATA_PATH, "users.pickle")
 
 PORT=8000
 

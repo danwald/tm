@@ -1,6 +1,6 @@
 import cPickle as pickle
 
-from bottle import Bottle, run, get
+from bottle import Bottle, run, get, HTTPError
 
 from conf.settings import PORT, USER_PICKLE, MOVIE_PICKLE
 
@@ -22,7 +22,7 @@ def recommendation(type, id):
         else:
             return {'id':id, 'data': users[id]}
     except KeyError:
-        return "404 Not Found"
+        return HTTPError(status=404)
 
 @app.get('/recommendation/<type:re:movie|user>/<id:int>')
 def recommendation(type, id):

@@ -27,7 +27,9 @@ def gen_movies():
 
 def gen_users():
     users = {}
-    for data_input in [(TAGS_SOURCE, 'tags'), (RATINGS_SOURCE, 'rating')]:
+    RATINGS_SOURCE_KEY = 'rating'
+    TAGS_SOURCE_KEY = 'tags'
+    for data_input in [(TAGS_SOURCE, TAGS_SOURCE_KEY), (RATINGS_SOURCE, RATINGS_SOURCE_KEY)]:
         with open(data_input[0]) as data:
             count = 0
             error_count = 0
@@ -38,8 +40,8 @@ def gen_users():
                     user_data = users[int(user_id)]
                 except KeyError:
                     user_data = {int(movie_id): {
-                                     'rating': float(rating_or_tag) if data_input[1] == 'rating' else -1,
-                                     'tags':[rating_or_tag] if data_input[1] == 'tags' else []
+                                     RATINGS_SOURCE_KEY: float(rating_or_tag) if data_input[1] == RATINGS_SOURCE_KEY else -1,
+                                     TAGS_SOURCE_KEY:[rating_or_tag] if data_input[1] == TAGS_SOURCE_KEY else []
                                      }
                                 }
                     users[int(user_id)] = user_data
@@ -52,10 +54,10 @@ def gen_users():
                         movie_data = user_data[int(movie_id)]
                     except KeyError:
                         user_data[int(movie_id)] = {
-                                 'rating': float(rating_or_tag) if data_input[1] == 'rating' else -1,
-                                 'tags':[rating_or_tag] if data_input[1] == 'tags' else []}
+                                 RATINGS_SOURCE_KEY: float(rating_or_tag) if data_input[1] == RATINGS_SOURCE_KEY else -1,
+                                 TAGS_SOURCE_KEY:[rating_or_tag] if data_input[1] == TAGS_SOURCE_KEY else []}
                     else:
-                        if data_input[1] == 'rating':
+                        if data_input[1] == RATINGS_SOURCE_KEY:
                             movie_data[data_input[1]] = float(rating_or_tag)
                         else:
                             movie_data[data_input[1]].append(rating_or_tag)

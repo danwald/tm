@@ -32,8 +32,6 @@ def gen_users():
             count = 0
             error_count = 0
             for record in data:
-                if count > 1000000:
-                    break
                 count += 1
                 try:
                     user_id, movie_id, rating_or_tag, _ = filter(bool, record.split('::'))
@@ -44,15 +42,23 @@ def gen_users():
                                      'tags':[rating_or_tag] if data_input[1] == 'tags' else []
                                      }
                                 }
-                    users[int(movie_id)] = user_data
+                    users[int(user_id)] = user_data
                 except:
                     print record
                     error_count += 1
                     pass
                 else:
-                    user_data[int(movie_id)] = {
+                    try:
+                        movie_data = user_data[int(movie_id)]
+                    except KeyError:
+                        user_data[int(movie_id)] = {
                                  'rating': float(rating_or_tag) if data_input[1] == 'rating' else -1,
                                  'tags':[rating_or_tag] if data_input[1] == 'tags' else []}
+                    else:
+                        if data_input[1] == 'rating':
+                            movie_data[data_input[1]] = float(rating_or_tag)
+                        else:
+                            movie_data[data_input[1]].append(rating_or_tag)
     pickle.dump(users, open(USER_PICKLE, 'wb'))
     print "\nGenerated %s. Processed %d records (errors:%d) (len:%d)"%(USER_PICKLE, count, error_count, len(users)),
 

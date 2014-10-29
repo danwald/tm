@@ -17,7 +17,7 @@ def gen_movies():
             count += 1
             try:
                 record = filter(bool, movie.split('::'))
-                movies[int(record[0])] = {'title':record[1],'tags': record[2].split('|')}
+                movies[int(record[0])] = {'title':record[1],'tags': record[2].strip().split('|')}
             except:
                 print movie
                 error_count += 1

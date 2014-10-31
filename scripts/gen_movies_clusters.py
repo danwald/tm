@@ -36,10 +36,11 @@ def run():
     feature_vectors = vstack(feature_vectors)
     centroids, _ = kmeans(feature_vectors,clusters)
     clustered_movies, _ = vq(feature_vectors, centroids)
-    pickle.dump(centroids, open(TAGS_PICKLE, 'wb'))
-    pickle.dump(movie_keys, open(TAGS_PICKLE, 'wb'))
-    pickle.dump(clustered_movies, open(TAGS_PICKLE, 'wb'))
-    pickle.dump(tags, open(TAGS_PICKLE, 'wb'))
+    with open(TAGS_PICKLE, 'wb') as data_file:
+        pickle.dump(centroids, data_file)
+        pickle.dump(movie_keys, data_file)
+        pickle.dump(clustered_movies, data_file)
+        pickle.dump(tags, data_file)
 
 
 if __name__ == "__main__":

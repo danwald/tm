@@ -2,13 +2,12 @@ import cPickle as pickle
 
 from bottle import Bottle, run, get, HTTPError
 
-from conf.settings import PORT, USER_PICKLE, MOVIE_PICKLE
+from conf.settings import PORT
+from rec_engine import RecEngine
 
-users = pickle.load(open(USER_PICKLE, 'rb'))
-movies = pickle.load(open(MOVIE_PICKLE, 'rb'))
 '''Simple RestAPI described http://docs.mrec.apiary.io/'''
 app = Bottle()
-
+engine = RecEngine()
 
 @app.get('/ping')
 def ping():
@@ -18,9 +17,9 @@ def ping():
 def recommendation(type, id):
     try:
         if type == 'movie':
-            return {'id':id, 'data': movies[id]}
+            return {'id':id, 'data': engine.get_movie(id)}
         else:
-            return {'id':id, 'data': users[id]}
+            return {'id':id, 'data': engine.get_user(id)}
     except KeyError:
         return HTTPError(status=404)
 

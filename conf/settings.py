@@ -8,6 +8,7 @@ MOVIE_PICKLE=os.path.join(DATA_PATH, "movies.pickle")
 TAGS_SOURCE=os.path.join(DATA_PATH, "tags.dat")
 RATINGS_SOURCE=os.path.join(DATA_PATH, "ratings.dat")
 USER_PICKLE=os.path.join(DATA_PATH, "users.pickle")
+TAGS_PICKLE=os.path.join(DATA_PATH, "tags.pickle")
 
 PORT=8000
 

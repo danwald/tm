@@ -25,7 +25,13 @@ def recommendation(type, id):
 
 @app.get('/recommendation/<type:re:movie|user>/<id:int>')
 def recommendation(type, id):
-    return {'id':-1, 'data': {'input': {'type': type, 'id':id}}}
+    try:
+        if type == 'movie':
+            return engine.get_movie_recommendation(id)
+        else:
+            return {'id':id, 'data': engine.get_user(id)}
+    except KeyError:
+        return HTTPError(status=404)
 
 @app.get('/recommendation/movie/<movie_id:int>/user/<user_id:int>')
 def recommendation(movie_id, user_id):

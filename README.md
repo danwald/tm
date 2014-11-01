@@ -25,7 +25,7 @@ wget https://github.com/danwald/tm/archive/v1.0.tar.gz
 tar xvfz v1.0.tar.gz
 virtualenv tm
 . ./tm/bin/activate
-cd master
+cd tm-1.0
 pip install -r requirements/requirements.txt
 bash scripts/get_data.sh
 python scripts/compute_pickled_dicts.py

@@ -11,7 +11,7 @@ from scipy.cluster.vq import kmeans,vq
 
 from conf.settings import *
 
-def run():
+def gen_movie_clusters():
     movies = pickle.load(open(MOVIE_PICKLE, 'rb'))
     tags = set()
     for movie in movies.values():
@@ -45,6 +45,5 @@ def run():
         pickle.dump(movies_by_cluster, data_file)
         pickle.dump(tags, data_file)
 
-
 if __name__ == "__main__":
-    run()
+    gen_movie_clusters()

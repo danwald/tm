@@ -34,6 +34,8 @@ def gen_users():
             count = 0
             error_count = 0
             for record in data:
+                #if count > 2000000:
+                #    break
                 count += 1
                 try:
                     user_id, movie_id, rating_or_tag, _ = filter(bool, record.split('::'))

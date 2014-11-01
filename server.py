@@ -29,12 +29,12 @@ def recommendation(type, id):
         if type == 'movie':
             return engine.get_movie_recommendation(id)
         else:
-            return {'id':id, 'data': engine.get_user(id)}
+            return engine.get_user_recommendation(id)
     except KeyError:
         return HTTPError(status=404)
 
 @app.get('/recommendation/movie/<movie_id:int>/user/<user_id:int>')
 def recommendation(movie_id, user_id):
-    return {'id':-1, 'data': {'input': {'movie_id': movie_id, 'user_id':user_id}}}
+    return HTTPError(status=501)
 
 run(app, host='localhost', port=PORT)

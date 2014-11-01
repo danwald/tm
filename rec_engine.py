@@ -1,5 +1,6 @@
 import cPickle as pickle
 from itertools import islice
+import math
 
 from conf.settings import *
 
@@ -34,4 +35,25 @@ class RecEngine(object):
             return {}
         
     def get_user_recommendation(self, id):
-        return self.user_data[id];
+        try:
+            data = {}
+            user = self.user_data[id]
+            user_movies = set(user.keys())
+            count = 0
+            for user_id in self.user_data.iterkeys():
+                if user_id == id:
+                    continue
+                similar_rating = 0
+                movies_overlap = user_movies & set(self.user_data[user_id].keys())
+                for movie_overlap in movies_overlap:
+                    if math.fabs(user[movie_overlap]['rating'] -
+                                self.user_data[user_id][movie_overlap]['rating']) <= 1.0:
+                        similar_rating += 1
+                if similar_rating / float(len(movies_overlap)) > 0.5:
+                    data[user_id] = self.user_data[user_id]
+                    count += 1
+                if count == 10:
+                    break
+            return data
+        except:
+            return {}
